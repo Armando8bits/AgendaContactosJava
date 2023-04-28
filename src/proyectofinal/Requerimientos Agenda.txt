@@ -1,0 +1,109 @@
+Requerimientos Agenda
+-ingresar contactos
+-consultar contactos
+-modificar contactos
+-eliminar contactos
+*validar que el registro de contactos no se duplique
+*validar el correcto funcionamiento de excepciones
+
+_______________________________________
+nombre
+apellido
+empresa
+telefono
+celular
+correo
+cumpleanos
+
+----------------------------creación de tabla
+CREATE TABLE `agendapoo2`.`contactos` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nombres` VARCHAR(50) NOT NULL,
+  `Apellido_pa` VARCHAR(50) NOT NULL,
+  `Apellido_ma` VARCHAR(50) NOT NULL,
+  `Empresa` VARCHAR(45) NOT NULL,
+  `Telefono` VARCHAR(20) NOT NULL,
+  `Celular` VARCHAR(20) NOT NULL,
+  `Correo` VARCHAR(254) NOT NULL,
+  `Cumpleanos` DATE NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+---------------------------------------codigo prueva 1
+package proyectofinal;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+/**
+ * @author ROQUEARMANDORAMIREZP
+ */
+public class ProyectoFinal {
+
+    public static void main(String[] args) {
+        try {
+            Connection miConexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/agendapoo2", "root", "");
+            Statement miStatement = miConexion.createStatement();
+            ResultSet miResultset = miStatement.executeQuery("Select * from contactos");
+            while (miResultset.next()) {
+                System.out.println(miResultset.getString("id"));
+            }
+
+        } catch (Exception e) {
+            System.out.println("No se conecta :(");
+            e.printStackTrace();
+        }
+    }
+}
+
+----------------------------------------------HACER UNA CONSULTA DE UN DATO EXISTENTE
+package proyectofinal;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+/**
+ * @author ROQUEARMANDORAMIREZP
+ */
+public class ProyectoFinal {
+
+    public static void main(String[] args) {
+        try {
+            Connection miConexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/agendapoo2", "root", "");
+			PreparedStatement miSentencia= miConexion.prepareStatement("SELECT nombres,Apellido_pa,Apellido_ma,Empresa,Telefono,Celular,Correo,Cumpleanos FROM contactos WHERE nombres=? AND Apellido_pa=? AND Apellido_ma=? AND Empresa=? AND Telefono=? AND Celular=? AND Correo=? AND Cumpleanos=?");
+			miSentencia.setString("");
+			miSentencia.setString("");
+			miSentencia.setString("");
+			miSentencia.setString("");
+			miSentencia.setString("");
+			miSentencia.setString("");
+			miSentencia.setString("");
+			miSentencia.setString("");
+			miSentencia.setString(""); //si notas esta linea se repite ya que va agregan los datos a la consulta en el orden q se pidieron
+			ResultSet rs=miSentencia.executeQuery();
+
+            while (rs.next()) {
+                System.out.println(rs.getString("id")+" "+rs.getString("id2")); // y asi concatenas todos los campos
+            }
+            rs.close();
+            
+        } catch (Exception e) {
+            System.out.println("No se conecta :(");
+            e.printStackTrace();
+        }
+    }
+}
+
+
+"INSERT INTO contactos (`nombres`, `Apellido_pa`, `Apellido_ma`, `Empresa`, `Telefono`, `Celular`, `Correo`, `Cumpleanos`) VALUES ('"+StrDato[0]+"','"+StrDato[1]+"','"+StrDato[2]+"','"+StrDato[3]+"','"+StrDato[4]+"','"+StrDato[5]+"','"+StrDato[6]+"','"+StrDato[7]+"')";
+
+
+
+
+"INSERT INTO contactos (`nombres`, `Apellido_pa`, `Apellido_ma`, `Empresa`, `Telefono`, `Celular`, `Correo`, `Cumpleanos`) VALUES ('"+StrDato[0]+"','"+StrDato[1]+"','"+StrDato[2]+"','"+StrDato[3]+"','"+StrDato[4]+"','"+StrDato[5]+"','"+StrDato[6]+"',"+"STR_TO_DATE('"+ StrDato[7]+"', '%m/%d/%Y')" +")";
+
+STR_TO_DATE(StrDato[7], '%m/%d/%Y')
